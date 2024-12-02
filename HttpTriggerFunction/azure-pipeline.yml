@@ -38,4 +38,19 @@ stages:
 
   - stage: Deploy
     displayName: "Deploy Stage"
-    dependsOn: Test # Ens
+    jobs:
+      - job: Deploy
+        displayName: "Deploy Job"
+        pool:
+          vmImage: "windows-latest"
+        steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: "functionAppArtifact"
+              targetPath: "$(System.DefaultWorkingDirectory)"
+            displayName: "Download Build Artifact"
+          - task: AzureFunctionApp@1
+            inputs:
+              azureSubscription: "assignment4" # Replace with the correct service connection name
+              appName: "ass4" # Replace with your Azure Function App name
+              package: "$(System.DefaultWorkingDirectory)/functionApp.zip"
