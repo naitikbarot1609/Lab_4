@@ -11,6 +11,7 @@ stages:
           vmImage: "ubuntu-latest"
         steps:
           - script: |
+              cd Lab_4
               npm install
             displayName: "Install Dependencies"
 
