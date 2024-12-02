@@ -41,4 +41,4 @@ stages:
             inputs:
               azureSubscription: "assignment4" # Replace with the correct service connection name
               appName: "ass4" # Replace with your Azure Function App name
-              package: "$(Build.ArtifactStagingDirectory)/**/*.zip". this is my yml file. Make necessaRY CHANGES 
+              package: "$(Build.ArtifactStagingDirectory)/**/*.zip"
