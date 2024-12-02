@@ -38,6 +38,6 @@ stages:
         steps:
           - task: AzureFunctionApp@1
             inputs:
-              azureSubscription: "Azure for Students" # Replace with your Azure Service Connection name
+              azureSubscription: "naitikbarot1609" # Replace with your Azure Service Connection name
               appName: "YourFunctionAppName" # Replace with your Azure Function App name
               package: "$(Build.ArtifactStagingDirectory)/**/*.zip"
