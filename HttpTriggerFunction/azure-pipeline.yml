@@ -28,16 +28,16 @@ stages:
             displayName: "Run Unit Tests"
 
   - stage: Deploy
-  displayName: "Deploy Stage"
-  dependsOn: Test
-  jobs:
-    - job: Deploy
-      displayName: "Deploy Job"
-      pool:
-        vmImage: "windows-latest"
-      steps:
-        - task: AzureFunctionApp@1
-          inputs:
-            azureSubscription: "MyAzureServiceConnection"  # Replace with the correct service connection name
-            appName: "YourFunctionAppName"                 # Replace with your Azure Function App name
-            package: "$(Build.ArtifactStagingDirectory)/**/*.zip"
+    displayName: "Deploy Stage" # Ensure proper indentation here
+    dependsOn: Test # Ensure this stage runs after Test
+    jobs:
+      - job: Deploy
+        displayName: "Deploy Job"
+        pool:
+          vmImage: "windows-latest"
+        steps:
+          - task: AzureFunctionApp@1
+            inputs:
+              azureSubscription: "MyAzureServiceConnection" # Replace with the correct service connection name
+              appName: "YourFunctionAppName" # Replace with your Azure Function App name
+              package: "$(Build.ArtifactStagingDirectory)/**/*.zip"
