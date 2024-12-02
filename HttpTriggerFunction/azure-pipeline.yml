@@ -13,7 +13,9 @@ stages:
           - script: |
               cd Lab_4
               npm install
+              cd ..
               zip -r functionApp.zip * # Package the app into a zip file
+              cd Lab_4
             displayName: "Install Dependencies and Package App"
           - task: PublishBuildArtifacts@1
             inputs:
