@@ -20,7 +20,7 @@ stages:
             displayName: "Install Dependencies and Package App"
           - task: PublishBuildArtifacts@1
             inputs:
-              pathToPublish: "C:Users/Lenovo/Desktop/lab4/Lab_4/functionApp.zip"
+              pathToPublish: "$(System.DefaultWorkingDirectory)/Lab_4/functionApp.zip"
               artifactName: "functionAppArtifact"
               publishLocation: "Container"
             displayName: "Publish Build Artifact"
