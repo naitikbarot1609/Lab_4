@@ -10,10 +10,20 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         steps:
+          - checkout: self
+            submodules: true
+            persistCredentials: true
           - script: |
               cd Lab_4
               npm install
-            displayName: "Install Dependencies"
+              zip -r functionApp.zip *
+            displayName: "Install Dependencies and Package App"
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathToPublish: "C:Users/Lenovo/Desktop/lab4/Lab_4/functionApp.zip"
+              artifactName: "functionAppArtifact"
+              publishLocation: "Container"
+            displayName: "Publish Build Artifact"
 
   - stage: Test
     displayName: "Test Stage"
@@ -25,20 +35,25 @@ stages:
           vmImage: "ubuntu-latest"
         steps:
           - script: |
+              cd Lab_4
               npm test
             displayName: "Run Unit Tests"
 
   - stage: Deploy
-    displayName: "Deploy Stage" # Ensure proper indentation here
-    dependsOn: Test # Ensure this stage runs after Test
+    displayName: "Deploy Stage"
     jobs:
       - job: Deploy
         displayName: "Deploy Job"
         pool:
           vmImage: "windows-latest"
         steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: "functionAppArtifact"
+              targetPath: "$(System.DefaultWorkingDirectory)"
+            displayName: "Download Build Artifact"
           - task: AzureFunctionApp@1
             inputs:
               azureSubscription: "assignment4" # Replace with the correct service connection name
               appName: "ass4" # Replace with your Azure Function App name
-              package: "$(Build.ArtifactStagingDirectory)/**/*.zip"
+              package: "$(System.DefaultWorkingDirectory)/Lab_4/functionApp.zip"
